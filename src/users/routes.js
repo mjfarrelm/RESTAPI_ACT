@@ -8,14 +8,14 @@ const userRouter = Router();
 const {registerUser, login, readUsers,updateUser, deleteUser} = require("./controllers");
 
 //imports the hash password function from the middleware folder
-const {hashThePassword, comparePasswords, validateEmail} = require("../middleware/index")
+const {hashThePassword, comparePasswords, validateEmail, tokenCheck} = require("../middleware/index")
 
 //creates file paths for the pages we want to access in thunder client
 userRouter.post("/users/register", validateEmail, hashThePassword, registerUser)
 
 userRouter.post("/users/login", comparePasswords, login)
 
-userRouter.get("/users/readUsers", readUsers)
+userRouter.get("/users/readUsers", tokenCheck, readUsers)
 
 userRouter.put("users/updateUser", updateUser)
 

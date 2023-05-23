@@ -1,8 +1,12 @@
 //import express, dotenv packages to be used & set up an app to run the express package.
 
 const express = require("express");
+const cors = require("cors");
 require("dotenv").config();
 const app = express();
+
+//Adds the cors package to the file so we can link back end to front end safely.
+app.use(cors())
 
 //Adds the port number that is currently stored in the dotenv file.
 const port = process.env.PORT;
