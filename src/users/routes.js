@@ -15,7 +15,9 @@ userRouter.post("/users/register", validateEmail, hashThePassword, registerUser)
 
 userRouter.post("/users/login", comparePasswords, login)
 
-userRouter.get("/users/readUsers", tokenCheck, readUsers)
+userRouter.get("/users/readUsers", readUsers)
+
+userRouter.get("/users/authCheck", tokenCheck, login)
 
 userRouter.put("users/updateUser", updateUser)
 

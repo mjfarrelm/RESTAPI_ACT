@@ -9,7 +9,7 @@ const app = express();
 app.use(cors())
 
 //Adds the port number that is currently stored in the dotenv file.
-const port = process.env.PORT;
+const port = process.env.PORT || 5001;
 
 //import Routes file to be accessed
 const userRouter = require("./users/routes")

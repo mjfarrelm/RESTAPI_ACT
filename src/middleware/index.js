@@ -64,22 +64,20 @@ async function validateEmail (req, res , next) {
 
 async function tokenCheck (req, res, next) {
     try {
-        const token = req.header("Authorization")
-        console.log("!!!!!!")
-        console.log(token)
-        console.log("!!!!!!")
-
-        const decodedToken = await jwt.verify(token, process.env.SECRET_KEY)
-        console.log("decoded token")
-        console.log(decodedToken.id)
-        const user = await User.findById(decodedToken.id)
-        console.log("Decoded token ID")
-        console.log(user)
-        if (user) {
-            next()
-        } else {
-            throw new Error ("user is not authorised")
+        if(!req.header("Authorization")) {
+            throw new Error("Unauthorised")
         }
+        const token = req.header("Authorization")
+     
+        const decodedToken = await jwt.verify(token, process.env.SECRET_KEY)
+   
+        const user = await User.findById(decodedToken.id)
+    
+        if (!user) {
+            throw new Error("user is not authorised")
+        }
+        req.authUser = user
+        next()
     } catch (error) {
         console.log(error)
         res.status(500).send({error: error.message})

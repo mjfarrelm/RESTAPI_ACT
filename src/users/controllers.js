@@ -21,6 +21,17 @@ async function registerUser(req, res){
 
 async function login(req, res){
     try {
+        if (req.authUser) {
+            res.status(200).send({
+                message: "Success",
+                user:  {
+                    user: req.authUser.username,
+                    email: req.authUser.email
+                }
+            })
+            return
+        }
+
        const token = await jwt.sign({id: req.userInfo._id}, process.env.SECRET_KEY)
 
     console.log("User succesfully logged in", req.body.username)
